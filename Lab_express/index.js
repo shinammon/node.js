@@ -12,7 +12,7 @@ router.get('/data',function(req,res){
         name:'財團法人資訊工業策進會',
         website:'https://www.iii.org.tw/',
         address: '台北市大安區和平東路二段',
-        tel: '02-6632-81681'
+        tel: '02-6632-8168'
     })
 })
 
