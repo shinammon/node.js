@@ -1,8 +1,12 @@
+var express = require("express");
 var mysql = require("mysql");
+var app = express();
+app.listen(3000);
 var conn = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "root",
+  
 });
 
 conn.connect(function (err) {
@@ -50,4 +54,5 @@ conn.query(insertNewsSQL,function(err){
     }
     process.exit(0);
 });
+
 
