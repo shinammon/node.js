@@ -7,7 +7,7 @@ app.get('/',function(req,res){
         title: 'EJS樣板測試',
         headTitle:'實作EJS',
         bodyitems:['我是一','我是二','我是三','我是四','我是五',],
-        footNote: '@2020 Copyright'
+        footNote: '@2021 Copyright'
     });
 });
 
