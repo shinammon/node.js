@@ -3,6 +3,7 @@ const app = express();
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const path = require("path");
+const { registerValidation,loginValidation} = require("./validation");
 
 const bodyParser = require('body-parser');
 const e = require("express");
@@ -43,6 +44,14 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
+    let{error} = loginValidation(req.body);
+    if(error){
+        if(error.details[0].context.key === "email"){
+            return res.json ({success:false, code:"帳號需為有效之Email帳號！"});
+        }else if(error.details[0].context.key === "password"){
+            return res.json ({success:false, code:"密碼必須為8~12位數(英文 + 數字)！"});
+        }
+    }
     const query = "SELECT user_pwd from member where user_email=?";
     const params = req.body.email
     connection.query(query, params, async (err, rows) => {
@@ -70,6 +79,17 @@ app.get('/register', (req, res) => {
     res.render('register.ejs')
 })
 app.post('/register', async (req, res) => {
+    let{error} = registerValidation(req.body);
+    if(error){
+        if(error.details[0].context.key === "email"){
+            return res.json ({success:false, message:"帳號需為有效之Email帳號！"});
+        }else if(error.details[0].context.key === "password"){
+            return res.json ({success:false, message:"密碼必須為8~12位數(英文 + 數字)！"});
+        }
+        // else if(error.details[0].context.key === "telephone"){
+        //     return res.json ({success:false, message:"電話必須為09開頭且為10碼!"});
+        // }
+    }
     try {
         let result = {};
         // 尋找是否有重複的email
